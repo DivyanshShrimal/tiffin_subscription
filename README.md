@@ -81,6 +81,19 @@ Development mode with auto-reload:
 npm run dev
 ```
 
+### 5. Running the Frontend App
+```bash
+cd ../frontend
+npm install
+npm run dev
+# React + Vite app starts on http://localhost:5173
+```
+
+To build for production:
+```bash
+npm run build
+```
+
 ---
 
 ## 🧪 Running Automated Tests
