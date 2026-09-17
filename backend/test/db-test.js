@@ -12,6 +12,8 @@ assert(tableNames.includes('users'), 'users table must exist');
 assert(tableNames.includes('customers'), 'customers table must exist');
 assert(tableNames.includes('subscriptions'), 'subscriptions table must exist');
 assert(tableNames.includes('pauses'), 'pauses table must exist');
+assert(tableNames.includes('outbox'), 'outbox table must exist');
+assert(tableNames.includes('subscription_transfers'), 'subscription_transfers table must exist');
 
 // Test foreign key constraint enforcement
 const pragmaFk = db.prepare('PRAGMA foreign_keys').get();

@@ -578,6 +578,39 @@ function getCustomerBill(req, res) {
   }
 }
 
+const { processCustomerCsvImport } = require('../utils/csvImport');
+
+// 12. Import Customers from CSV (T4)
+function importCustomers(req, res) {
+  try {
+    let csvContent = '';
+
+    if (req.file && req.file.buffer) {
+      csvContent = req.file.buffer.toString('utf8');
+    } else if (req.body && typeof req.body.csv === 'string') {
+      csvContent = req.body.csv;
+    } else if (typeof req.body === 'string') {
+      csvContent = req.body;
+    }
+
+    if (!csvContent || csvContent.trim().length === 0) {
+      return res.status(400).json({
+        error: 'Bad Request',
+        message: 'CSV content or file is required. Upload a file or provide a csv string.'
+      });
+    }
+
+    const report = processCustomerCsvImport(csvContent);
+    return res.status(200).json(report);
+  } catch (error) {
+    console.error('Error importing customers:', error);
+    return res.status(500).json({
+      error: 'Internal Server Error',
+      message: error.message
+    });
+  }
+}
+
 module.exports = {
   createCustomer,
   listCustomers,
@@ -589,5 +622,6 @@ module.exports = {
   pauseCustomer,
   resumeCustomer,
   getCustomerStatus,
-  getCustomerBill
+  getCustomerBill,
+  importCustomers
 };

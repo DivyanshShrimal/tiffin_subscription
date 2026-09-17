@@ -11,7 +11,8 @@ const {
   pauseCustomer,
   resumeCustomer,
   getCustomerStatus,
-  getCustomerBill
+  getCustomerBill,
+  importCustomers
 } = require('../controllers/customerController');
 
 const router = express.Router();
@@ -19,12 +20,16 @@ const router = express.Router();
 // All customer, subscription, and billing endpoints require authentication
 router.use(requireAuth);
 
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
+
 // Collection routes
 router.get('/', listCustomers);
 router.post('/', createCustomer);
 
-// Phone search (must be before /:id)
+// Phone search and CSV import (must be before /:id)
 router.get('/search', searchCustomersByPhone);
+router.post('/import', upload.single('file'), importCustomers);
 
 // Customer member routes
 router.get('/:id', getCustomerById);

@@ -7,6 +7,7 @@ const app = express();
 // Middlewares
 app.use(cors());
 app.use(express.json());
+app.use(express.text({ type: ['text/csv', 'text/plain'], limit: '10mb' }));
 
 // Root & Health check endpoints
 app.get('/', (req, res) => {
@@ -39,9 +40,17 @@ app.get('/api/health', (req, res) => {
 // Routes
 const authRoutes = require('./routes/auth');
 const customerRoutes = require('./routes/customers');
+const subscriptionRoutes = require('./routes/subscriptions');
+const notificationRoutes = require('./routes/notifications');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/customers', customerRoutes);
+app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/subscriptions', subscriptionRoutes);
+
+// Clock and Outbox endpoints (T1: available at both /api/... and /...)
+app.use('/api', notificationRoutes);
+app.use('/', notificationRoutes);
 
 // 404 handler
 app.use((req, res) => {
