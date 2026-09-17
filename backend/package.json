@@ -1,0 +1,20 @@
+{
+  "name": "tiffin-subscription-backend",
+  "version": "1.0.0",
+  "description": "Backend for Tiffin Subscription Management System",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test test/**/*.test.js"
+  },
+  "keywords": ["tiffin", "subscription", "express", "sqlite"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
